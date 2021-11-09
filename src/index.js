@@ -74,7 +74,8 @@ class Game extends React.Component {
         squareClickPosition: null
       }],
       xIsNext: true,
-      stepNumber: 0
+      stepNumber: 0,
+      clickList: null
     };
   }
 
@@ -100,6 +101,7 @@ class Game extends React.Component {
     this.setState({
       stepNumber: step,
       xIsNext: (step % 2) === 0,
+      clickList: step
     });
   }
 
@@ -116,7 +118,10 @@ class Game extends React.Component {
 
       return (
         <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          <button 
+            style={this.state.clickList === move ? {'font-weight': 'bold'} : {'font-weight': 'normal'}} 
+            onClick={() => this.jumpTo(move)}>{desc}
+          </button>
         </li>
       );
     });
