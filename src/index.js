@@ -75,7 +75,8 @@ class Game extends React.Component {
       }],
       xIsNext: true,
       stepNumber: 0,
-      clickList: null
+      clickList: null,
+      orderList: null
     };
   }
 
@@ -103,6 +104,12 @@ class Game extends React.Component {
       stepNumber: step,
       xIsNext: (step % 2) === 0,
       clickList: step
+    });
+  }
+
+  orderList(){
+    this.setState({
+      orderList: this.state.orderList === 'asc' || this.state.orderList === null ? 'desc': 'asc'
     });
   }
 
@@ -144,7 +151,10 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
-          <ol>{moves}</ol>
+          <ol>{this.state.orderList === 'asc' || this.state.orderList === null ? moves : moves.reverse()}</ol>
+          <div>
+            <button onClick={() => this.orderList()}>Orden Lista</button>
+          </div>
         </div>
       </div>
     );
