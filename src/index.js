@@ -138,7 +138,13 @@ class Game extends React.Component {
 
     let status;
     if (winner) {
-      status = 'Winner: ' + winner.winner;
+
+      if(winner.winner === 'empate' ){
+        status = 'This is a tie!';
+      }else{
+        status = 'Winner: ' + winner.winner;
+      }
+
     } else {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     }
@@ -149,7 +155,7 @@ class Game extends React.Component {
           <Board
             squares={current.squares}
             onClick={(i) => this.handleClick(i)}
-            lineWinner={winner ? winner.line : null}
+            lineWinner={winner && winner.winner !== 'empate' ? winner.line : null}
           />
         </div>
         <div className="game-info">
@@ -181,6 +187,11 @@ function calculateWinner(squares) {
       return {winner: squares[a], line: lines[i]};
     }
   }
+
+  if (!squares.includes(null)){
+    return {winner : 'empate'};
+  }
+
   return null;
 }
 
