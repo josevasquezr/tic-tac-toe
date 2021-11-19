@@ -70,16 +70,7 @@ class Game extends React.Component {
   constructor(props){
     super(props);
 
-    this.state = {
-      history: [{
-        squares: Array(9).fill(null),
-        squareClickPosition: null
-      }],
-      xIsNext: true,
-      stepNumber: 0,
-      clickList: null,
-      orderList: null
-    };
+    this.state = this.jsonInicial();
   }
 
   handleClick(i) {
@@ -113,6 +104,23 @@ class Game extends React.Component {
     this.setState({
       orderList: this.state.orderList === 'asc' || this.state.orderList === null ? 'desc': 'asc'
     });
+  }
+
+  restartGame(){
+    this.setState(this.jsonInicial());
+  }
+
+  jsonInicial(){
+    return {
+      history: [{
+        squares: Array(9).fill(null),
+        squareClickPosition: null
+      }],
+      xIsNext: true,
+      stepNumber: 0,
+      clickList: null,
+      orderList: null
+    };
   }
 
   render() {
@@ -159,10 +167,13 @@ class Game extends React.Component {
           />
         </div>
         <div className="game-info">
-          <div>{status}</div>
+          <div style={winner ? {'color' : '#008f39', 'fontWeight' : 'bold'} : {'color' : '#000000', 'fontWeight' : 'normal'}}>
+            {status}
+          </div>
           <ol>{this.state.orderList === 'asc' || this.state.orderList === null ? moves : moves.reverse()}</ol>
           <div>
             <button onClick={() => this.orderList()}>Orden Lista</button>
+            <button onClick={() => this.restartGame()}>Reiniciar Juego</button>
           </div>
         </div>
       </div>
